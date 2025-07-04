@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Happy Birthday Card</title>
+  <link href="https://fonts.googleapis.com/css2?family=Itim&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Comic Sans MS', cursive;
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    .container {
+      width: 100%;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      background: linear-gradient(135deg, #ff9bb3 0%, #ffc6d7 100%);
+      background-size: 400% 400%;
+      animation: bgGradientShift 60s ease-in-out infinite;
+    }
+
+    @keyframes bgGradientShift {
+      0%,100% { background: linear-gradient(135deg, #ff9bb3 0%, #ffc6d7 100%); }
+      50% { background: linear-gradient(135deg, #ffab91 0%, #ffccbc 100%); }
+    }
+
+    .gift-page {
+      text-align: center;
+      position: relative;
+    }
+
+    .gift-box-wrapper {
+      perspective: 1000px;
+      cursor: pointer;
+    }
+
+    .gift-box-wrapper.glow {
+      filter:
+        drop-shadow(0 0 16px rgba(255, 105, 135, 0.8))
+        drop-shadow(0 0 32px rgba(255, 195, 0, 0.7))
+        drop-shadow(0 0 48px rgba(255, 105, 135, 0.6));
+    }
+
+    .gift-box {
+      width: 220px;
+      height: 180px;
+      position: relative;
+      margin: 0 auto;
+      transition: all 0.3s ease;
+      animation: giftFloat 3s ease-in-out infinite;
+      transform-style: preserve-3d;
+    }
+
+    .gift-box:hover {
+      transform: scale(1.05) rotateY(5deg);
+    }
+
+    @keyframes giftFloat {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+
+    .box-base {
+      width: 100%;
+      height: 140px;
+      background: linear-gradient(145deg, #d32f2f 0%, #b71c1c 100%);
+      border-radius: 8px;
+      position: relative;
+      box-shadow: 
+        0 10px 30px rgba(0, 0, 0, 0.3),
+        inset 0 2px 4px rgba(255, 255, 255, 0.2),
+        inset 0 -2px 4px rgba(0, 0, 0, 0.2);
+      border: 2px solid #a01818;
+    }
+
+    .box-lid {
+      position: absolute;
+      top: -20px;
+      left: -5px;
+      width: 230px;
+      height: 40px;
+      background: linear-gradient(145deg, #e53935 0%, #d32f2f 100%);
+      border-radius: 8px 8px 4px 4px;
+      box-shadow: 
+        0 5px 15px rgba(0, 0, 0, 0.3),
+        inset 0 2px 4px rgba(255, 255, 255, 0.2);
+      border: 2px solid #a01818;
+    }
+
+    .ribbon-vertical, .ribbon-horizontal {
+      position: absolute;
+      background: linear-gradient(to right, #ffd700, #ffb300, #ffd700);
+      border-radius: 12px;
+      box-shadow:
+        0 5px 15px rgba(0, 0, 0, 0.2),
+        inset 0 2px 4px rgba(255, 255, 255, 0.3),
+        inset 0 -2px 4px rgba(0, 0, 0, 0.2);
+      border: 1px solid #e6a600;
+      z-index: 10;
+    }
+
+    .ribbon-vertical {
+      top: -25px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 25px;
+      height: 185px;
+    }
+
+    .ribbon-horizontal {
+      top: 50%;
+      left: -5px;
+      transform: translateY(-50%);
+      width: 230px;
+      height: 25px;
+    }
+
+    .bow {
+      position: absolute;
+      top: -35px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 50px;
+      z-index: 20;
+    }
+
+    .bow-center {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 20px;
+      height: 30px;
+      background: linear-gradient(145deg, #b71c1c 0%, #d32f2f 100%);
+      border-radius: 8px;
+      box-shadow: 
+        0 3px 8px rgba(0, 0, 0, 0.3),
+        inset 0 1px 2px rgba(255, 255, 255, 0.2);
+      z-index: 25;
+    }
+
+    .bow-left, .bow-right {
+      width: 40px;
+      height: 35px;
+      background: linear-gradient(145deg, #ffd700 0%, #ffb300 100%);
+      box-shadow: 
+        0 5px 15px rgba(0, 0, 0, 0.3),
+        inset 0 2px 4px rgba(255, 255, 255, 0.3);
+      border: 1px solid #e6a600;
+    }
+
+    .bow-left {
+      position: absolute;
+      top: 5px;
+      left: -15px;
+      border-radius: 50% 20% 50% 20%;
+      transform: rotate(-20deg);
+    }
+
+    .bow-right {
+      position: absolute;
+      top: 5px;
+      right: -15px;
+      border-radius: 20% 50% 20% 50%;
+      transform: rotate(20deg);
+    }
+
+    .gift-box::after {
+      content: '';
+      position: absolute;
+      bottom: -30px;
+      left: 10%;
+      width: 80%;
+      height: 20px;
+      background: rgba(0, 0, 0, 0.2);
+      border-radius: 50%;
+      filter: blur(10px);
+      z-index: -1;
+    }
+
+    .click-text {
+      position: absolute;
+      bottom: -80px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: #666;
+      font-size: 18px;
+      animation: textPulse 2s ease-in-out infinite;
+    }
+
+    @keyframes textPulse {
+      0%, 100% { opacity: 0.7; transform: translateX(-50%) scale(1); }
+      50% { opacity: 1; transform: translateX(-50%) scale(1.05); }
+    }
+
+    .confetti-dot {
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      animation: confettiFloat 6s ease-in-out infinite;
+    }
+
+    @keyframes confettiFloat {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-20px) rotate(180deg); }
+    }
+
+    .falling-ball {
+      position: fixed;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      z-index: 1000;
+      animation: fall 3s linear infinite;
+    }
+
+    @keyframes fall {
+      0% {
+        transform: translateY(-100vh) rotate(0deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(100vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    .card-page {
+      display: none;
+      width: 80%;
+      max-width: 600px;
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(12px);
+      border-radius: 20px;
+      padding: 40px;
+      text-align: center;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card-page.show {
+      display: block;
+      animation: cardSlideIn 0.8s ease-out;
+    }
+
+    .card-title {
+      font-size: 2.5em;
+      color: #e91e63;
+      margin-bottom: 30px;
+    }
+
+    .message-line {
+      font-size: 1.2em;
+      color: #333;
+      margin: 15px 0;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.6s ease;
+      line-height: 1.6;
+    }
+
+    .message-line.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .wish-font {
+  font-family: 'Itim', cursive;
+}
+
+
+   .cute-image {
+  width: 250px;
+  padding: 20px;
+  margin: 20px auto;
+  background: rgba(255, 255, 255, 0.1); /* โปร่งใส */
+  backdrop-filter: blur(8px);           /* ให้เบลอ */
+  border-radius: 20px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+  transition: all 0.8s ease;
+  opacity: 0;
+  transform: scale(0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+    .cute-image.show {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .bread-characters {
+    text-shadow: 0 0 8px #ffc1e3;
+    font-size: 2.5em;
+    font-family: 'Itim', cursive;
+    color: #e91e63;
+}
+
+    .back-button {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      background: #e91e63;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 25px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: all 0.3s ease;
+    }
+
+    .back-button:hover {
+      background: #ad1457;
+      transform: scale(1.05);
+    }
+
+    #card-confetti {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 5;
+}
+
+/* ย้ายออกมาแบบนี้ */
+.save-button {
+  margin-top: 30px;
+  background: #4caf50;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  font-size: 16px;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  opacity: 0;
+  transform: scale(0.95);
+}
+
+/* ปุ่มเมื่อ hover */
+.save-button:hover {
+  background: #388e3c;
+  transform: scale(1.05);
+}
+
+/* เอฟเฟกต์ fade-in */
+.fade-in {
+  animation: fadeInAnim 1s ease forwards;
+}
+
+@keyframes fadeInAnim {
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div id="giftPage" class="gift-page">
+      <div class="gift-box-wrapper glow" onclick="openGift()">
+        <div class="gift-box">
+          <div class="box-base"></div>
+          <div class="box-lid"></div>
+          <div class="ribbon-vertical"></div>
+          <div class="ribbon-horizontal"></div>
+          <div class="bow">
+            <div class="bow-left"></div>
+            <div class="bow-right"></div>
+            <div class="bow-center"></div>
+          </div>
+        </div>
+      </div>
+      <div class="click-text">Click</div>
+      <!-- confetti dots -->
+      <div class="confetti-dot" style="top: 20%; left: 10%; background: #ff4081;"></div>
+      <div class="confetti-dot" style="top: 30%; left: 80%; background: #4fc3f7;"></div>
+      <div class="confetti-dot" style="top: 60%; left: 15%; background: #81c784;"></div>
+      <div class="confetti-dot" style="top: 70%; left: 85%; background: #ffb74d;"></div>
+    </div>
+
+    <canvas id="card-confetti" class="hidden"></canvas>
+    <div id="cardPage" class="card-page">
+      <button class="back-button" onclick="goBack()">← Back</button>
+      <div class="card-title">🎉 Happy Birthday 🎂</div>
+      <div class="message-line wish-font" id="line1">ขอให้มีความสุขมาก ๆ ✨</div>
+      <div class="message-line wish-font" id="line2">สมหวังในทุกสิ่งที่ปรารถนา 💖</div>
+      <div class="message-line wish-font" id="line3">สุขภาพแข็งแรง มีแต่เรื่องดี ๆ 🎁</div>
+      <div class="cute-image" id="cuteImage">
+        <div class="bread-characters">😊 🎈 🎉</div>
+      </div>
+      <button id="screenshotBtn" class="save-button" style="display: none;">💾 Save as Image</button>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script>
+    let ballInterval;
+
+    function openGift() {
+      document.getElementById('giftPage').style.display = 'none';
+      const cardPage = document.getElementById('cardPage');
+      cardPage.style.display = 'block';
+      cardPage.classList.add('show');
+
+      showMessagesSequentially();
+      startFallingBalls();
+
+      const canvas = document.getElementById('card-confetti');
+      canvas.classList.remove('hidden');
+      confetti({
+        particleCount: 120,
+        spread: 70,
+        origin: { x: 0.5, y: 0.5 }
+      });
+
+      document.getElementById('screenshotBtn').addEventListener('click', async () => {
+        const canvasImg = await html2canvas(cardPage);
+        const link = document.createElement('a');
+        link.download = 'สำหรับคนน่ารัก💖';
+        link.href = canvasImg.toDataURL();
+        link.click();
+      });
+    }
+
+    function showMessagesSequentially() {}
+  const lines = ['line1', 'line2', 'line3'];
+  lines.forEach((lineId, index) => {
+    setTimeout(() => {
+      document.getElementById(lineId).classList.add('show');
+    }, (index + 1) * 1500);
+  });
+
+  // แสดง emoji หลัง 5 วินาที
+  setTimeout(() => {
+    document.getElementById('cuteImage').classList.add('show');
+  }, 5000);
+
+  // แสดงปุ่ม "บันทึกการ์ด" หลัง 5.5 วินาที
+    setTimeout(() => {
+    const btn = document.getElementById('screenshotBtn');
+    btn.style.display = 'inline-block';
+    btn.classList.add('fade-in');
+  }, 5500);
+
+
+
+    function startFallingBalls() {
+      const colors = ['#ff4081', '#4fc3f7', '#81c784', '#ffb74d', '#ba68c8'];
+      ballInterval = setInterval(() => {
+        for (let i = 0; i < 3; i++) {
+          setTimeout(() => {
+            const ball = document.createElement('div');
+            ball.className = 'falling-ball';
+            ball.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+            ball.style.left = Math.random() * 100 + '%';
+            ball.style.animationDelay = Math.random() * 2 + 's';
+            document.body.appendChild(ball);
+            setTimeout(() => ball.remove(), 3000);
+          }, i * 200);
+        }
+      }, 800);
+      setTimeout(() => clearInterval(ballInterval), 10000);
+    }
+
+    function goBack() {
+      document.getElementById('cardPage').classList.remove('show');
+      setTimeout(() => {
+        document.getElementById('cardPage').style.display = 'none';
+        document.getElementById('giftPage').style.display = 'block';
+      }, 300);
+
+      const lines = ['line1', 'line2', 'line3'];
+      lines.forEach(id => document.getElementById(id).classList.remove('show'));
+      document.getElementById('cuteImage').classList.remove('show');
+      clearInterval(ballInterval);
+    }
+  </script>
+</body>
+</html>
